@@ -24,9 +24,6 @@ public class CsvWeatherDataReader implements WeatherDataReader {
         logger.info("Reading weather data from file: " + filePath);
         try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
             List<String[]> lines = reader.readAll();
-            if (lines.isEmpty()) {
-                throw new WeatherDataReaderException("File is empty");
-            }
             return lines.stream()
                     .skip(1)
                     .map(line -> {

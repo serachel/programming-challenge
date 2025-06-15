@@ -1,13 +1,12 @@
 package de.bcxp.challenge;
 
 import java.util.List;
-import java.util.logging.Handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.bcxp.challenge.weather.CsvWeatherDataReader;
-import de.bcxp.challenge.weather.WeatherDataReaderException;
+import de.bcxp.challenge.weather.WeatherAnalyzer;
 import de.bcxp.challenge.weather.WeatherData;
 
 /**
@@ -26,15 +25,18 @@ public final class App {
 
     public static void main(String... args) {
 
-        CsvWeatherDataReader weatherDataReader = new CsvWeatherDataReader("src/main/resources/de/bcxp/challenge/weather.csv");
+        CsvWeatherDataReader weatherDataReader = new CsvWeatherDataReader(
+                "src/main/resources/de/bcxp/challenge/weather.csv");
+        WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();
+
         try {
             List<WeatherData> weatherData = weatherDataReader.read();
             logger.info("Successfully read weather data.");
-            System.out.printf("MaxTemp of first day: %s%n", weatherData.get(0).getMaxTemp());
-            String dayWithSmallestTempSpread = "Someday"; // Your day analysis function call …
+
+            String dayWithSmallestTempSpread = weatherAnalyzer.getDayWithSmallestTempSpread(weatherData);
             System.out.printf("Day with smallest temperature spread: %s%n", dayWithSmallestTempSpread);
         } catch (Exception e) {
-            logger.error( e.getMessage());
+            logger.error(e.getMessage());
             System.err.printf(e.getMessage());
         }
 
