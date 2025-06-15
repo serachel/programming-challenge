@@ -5,7 +5,11 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.bcxp.challenge.countries.CsvCountryDataReader;
+import de.bcxp.challenge.countries.CountryData;
+import de.bcxp.challenge.countries.CountryDataReader;
 import de.bcxp.challenge.weather.CsvWeatherDataReader;
+import de.bcxp.challenge.weather.WeatherDataReader;
 import de.bcxp.challenge.weather.WeatherAnalyzer;
 import de.bcxp.challenge.weather.WeatherData;
 
@@ -25,7 +29,7 @@ public final class App {
 
     public static void main(String... args) {
 
-        CsvWeatherDataReader weatherDataReader = new CsvWeatherDataReader(
+        WeatherDataReader weatherDataReader = new CsvWeatherDataReader(
                 "src/main/resources/de/bcxp/challenge/weather.csv");
         WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();
 
@@ -39,7 +43,10 @@ public final class App {
             logger.error(e.getMessage());
             System.err.printf(e.getMessage());
         }
-
+        CountryDataReader countryDataReader = new CsvCountryDataReader(
+                "src/main/resources/de/bcxp/challenge/countries.csv");  
+        List<CountryData> countryData = countryDataReader.read();
+         System.out.printf("FirstCountryname: %s%n", countryData.get(0).getName());
         String countryWithHighestPopulationDensity = "Some country"; // Your population density analysis function call …
         System.out.printf("Country with highest population density: %s%n", countryWithHighestPopulationDensity);
     }
