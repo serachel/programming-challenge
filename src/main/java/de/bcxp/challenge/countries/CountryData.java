@@ -15,6 +15,14 @@ public class CountryData {
         return name;
     }
 
+    public int getPopulation() {
+        return population;
+    }
+
+    public int getArea() {
+        return area;
+    }
+
     public double getPopulationDensity() {
         return area == 0 ? 0 : (double) population / area;
     }

@@ -52,14 +52,13 @@ public class CsvCountryDataReader implements CountryDataReader {
                     .intValue();
             int area = NumberFormat.getNumberInstance(Locale.GERMAN).parse(line[columnIdxArea].trim()).intValue();
             return new CountryData(name, population, area);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | ParseException e) {
             throw new CountryDataReaderException(
-                    "Invalid values in row: " + String.join(",", line) + " " + e.getMessage());
+                    "Invalid values in row: " + String.join(";", line) + " " + e.getMessage());
         } catch (ArrayIndexOutOfBoundsException e) {
+            
             throw new CountryDataReaderException(
                     "Invalid CSV row: expected at least 5 columns. Row content: " + String.join(",", line));
-        } catch (ParseException e) {
-            throw new CountryDataReaderException("Error parsing number: " + e.getMessage());
-        }
+        } 
     }
 }
