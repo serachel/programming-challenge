@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.bcxp.challenge.countries.CsvCountryDataReader;
+import de.bcxp.challenge.countries.CountryAnalyzer;
 import de.bcxp.challenge.countries.CountryData;
 import de.bcxp.challenge.countries.CountryDataReader;
 import de.bcxp.challenge.weather.CsvWeatherDataReader;
@@ -43,11 +44,19 @@ public final class App {
             logger.error(e.getMessage());
             System.err.printf(e.getMessage());
         }
+
         CountryDataReader countryDataReader = new CsvCountryDataReader(
-                "src/main/resources/de/bcxp/challenge/countries.csv");  
-        List<CountryData> countryData = countryDataReader.read();
-         System.out.printf("FirstCountryname: %s%n", countryData.get(0).getName());
-        String countryWithHighestPopulationDensity = "Some country"; // Your population density analysis function call …
-        System.out.printf("Country with highest population density: %s%n", countryWithHighestPopulationDensity);
+                "src/main/resources/de/bcxp/challenge/countries.csv");
+        CountryAnalyzer countryAnalyzer = new CountryAnalyzer();
+        try {
+            List<CountryData> countryData = countryDataReader.read();
+            logger.info("Successfully read country data.");
+            String countryWithHighestPopulationDensity = countryAnalyzer.getMaxPopulationDensity(countryData); 
+            System.out.printf("Country with highest population density: %s%n", countryWithHighestPopulationDensity);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            System.err.printf(e.getMessage());
+        }
+        // Read the country data
     }
 }
