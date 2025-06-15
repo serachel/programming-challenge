@@ -8,12 +8,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import de.bcxp.challenge.countries.CsvCountryDataReader;
-
-import de.bcxp.challenge.countries.CountryData;
-import de.bcxp.challenge.countries.CountryDataReader;
-import de.bcxp.challenge.countries.CountryDataReaderException;
-
 public class CsvCountryReaderTest {
     @Test
     void shouldReadDataFromFileCorrectly() {
