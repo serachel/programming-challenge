@@ -44,6 +44,6 @@ public class CsvCountryReaderTest {
         CountryDataReader reader = new CsvCountryDataReader(
                 "src/test/resources/de/bcxp/challenge/countries_invalid_row.csv");
         CountryDataReaderException exception = assertThrows(CountryDataReaderException.class, reader::read);
-        assertTrue(exception.getMessage().contains("Invalid values in row:"));
+        assertTrue(exception.getMessage().contains("Invalid number:"));
     }
 }
