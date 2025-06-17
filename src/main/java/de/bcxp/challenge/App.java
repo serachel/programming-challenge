@@ -9,8 +9,10 @@ import de.bcxp.challenge.countries.CsvCountryDataReader;
 import de.bcxp.challenge.countries.CountryAnalyzer;
 import de.bcxp.challenge.countries.CountryData;
 import de.bcxp.challenge.countries.CountryDataReader;
+import de.bcxp.challenge.countries.CountryDataReaderException;
 import de.bcxp.challenge.weather.CsvWeatherDataReader;
 import de.bcxp.challenge.weather.WeatherDataReader;
+import de.bcxp.challenge.weather.WeatherDataReaderException;
 import de.bcxp.challenge.weather.WeatherAnalyzer;
 import de.bcxp.challenge.weather.WeatherData;
 
@@ -42,8 +44,11 @@ public final class App {
 
             String dayWithSmallestTempSpread = weatherAnalyzer.getDayWithSmallestTempSpread(weatherData);
             System.out.printf("Day with smallest temperature spread: %s%n", dayWithSmallestTempSpread);
+        } catch (WeatherDataReaderException e) {
+            logger.error("An error occurred while reading weather data: {}", e.getMessage());
+            System.err.printf("%s%n", e.getMessage());
         } catch (Exception e) {
-            logger.error("An error occurred while processing weather data: {}", e.getMessage());
+            logger.error(e.getMessage());
             System.err.printf("%s%n", e.getMessage());
         }
 
@@ -57,8 +62,11 @@ public final class App {
             List<CountryData> countryData = countryDataReader.read();
             String countryWithHighestPopulationDensity = countryAnalyzer.getMaxPopulationDensity(countryData);
             System.out.printf("Country with highest population density: %s%n", countryWithHighestPopulationDensity);
+        } catch (CountryDataReaderException e) {
+            logger.error("An error occurred while reading country data: {}", e.getMessage());
+            System.err.printf("%s%n", e.getMessage());
         } catch (Exception e) {
-            logger.error("An error occurred while processing country data: {}", e.getMessage());
+            logger.error(e.getMessage());
             System.err.printf(e.getMessage());
         }
     }
