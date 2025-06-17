@@ -29,12 +29,14 @@ public final class App {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main(String... args) {
-
-        WeatherDataReader weatherDataReader = new CsvWeatherDataReader(
-                "src/main/resources/de/bcxp/challenge/weather.csv");
-        WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();
-
+        String weatherFilePath = System.getenv("WEATHER_FILE_PATH");
         try {
+            if (weatherFilePath == null || weatherFilePath.isEmpty()) {
+                throw new IllegalArgumentException("WEATHER_FILE_PATH environment variable is not set or empty.");
+            }
+            WeatherDataReader weatherDataReader = new CsvWeatherDataReader(
+                    weatherFilePath);
+            WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer();
             List<WeatherData> weatherData = weatherDataReader.read();
             logger.info("Successfully read weather data.");
 
@@ -42,21 +44,23 @@ public final class App {
             System.out.printf("Day with smallest temperature spread: %s%n", dayWithSmallestTempSpread);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            System.err.printf(e.getMessage());
+            System.err.printf("%s%n", e.getMessage());
         }
 
-        CountryDataReader countryDataReader = new CsvCountryDataReader(
-                "src/main/resources/de/bcxp/challenge/countries.csv");
-        CountryAnalyzer countryAnalyzer = new CountryAnalyzer();
+        String countryFilePath = System.getenv("COUNTRY_FILE_PATH");
         try {
+            if (countryFilePath == null || countryFilePath.isEmpty()) {
+                throw new IllegalArgumentException("COUNTRY_FILE_PATH environment variable is not set or empty.");
+            }
+            CountryDataReader countryDataReader = new CsvCountryDataReader(countryFilePath);
+            CountryAnalyzer countryAnalyzer = new CountryAnalyzer();
             List<CountryData> countryData = countryDataReader.read();
             logger.info("Successfully read country data.");
-            String countryWithHighestPopulationDensity = countryAnalyzer.getMaxPopulationDensity(countryData); 
+            String countryWithHighestPopulationDensity = countryAnalyzer.getMaxPopulationDensity(countryData);
             System.out.printf("Country with highest population density: %s%n", countryWithHighestPopulationDensity);
         } catch (Exception e) {
             logger.error(e.getMessage());
             System.err.printf(e.getMessage());
         }
-        // Read the country data
     }
 }

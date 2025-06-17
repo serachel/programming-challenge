@@ -135,6 +135,9 @@ you are convenient with.
 
 After installing Maven 3.x or by calling the included Maven wrapper (`mvnw` and `mvnw.cmd`, depending on your operating system) you should be able to
 
+To set the environment variables::
+    `source ./setup_env.sh`
+
 Build & test your project::
     `mvn verify`
 
