@@ -2,6 +2,9 @@ package de.bcxp.challenge;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.bcxp.challenge.countries.CsvCountryDataReader;
 import de.bcxp.challenge.countries.CountryAnalyzer;
 import de.bcxp.challenge.countries.CountryData;
@@ -23,6 +26,7 @@ public final class App {
      * 
      * @param args The CLI arguments passed
      */
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main(String... args) {
         String weatherFilePath = System.getenv("WEATHER_FILE_PATH");
@@ -39,6 +43,7 @@ public final class App {
             String dayWithSmallestTempSpread = weatherAnalyzer.getDayWithSmallestTempSpread(weatherData);
             System.out.printf("Day with smallest temperature spread: %s%n", dayWithSmallestTempSpread);
         } catch (Exception e) {
+            logger.error("An error occurred while processing weather data: {}", e.getMessage());
             System.err.printf("%s%n", e.getMessage());
         }
 
@@ -53,6 +58,7 @@ public final class App {
             String countryWithHighestPopulationDensity = countryAnalyzer.getMaxPopulationDensity(countryData);
             System.out.printf("Country with highest population density: %s%n", countryWithHighestPopulationDensity);
         } catch (Exception e) {
+            logger.error("An error occurred while processing country data: {}", e.getMessage());
             System.err.printf(e.getMessage());
         }
     }
