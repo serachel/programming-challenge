@@ -36,10 +36,12 @@ public class CsvCountryDataReader implements CountryDataReader {
                 .build()) {
             List<String[]> lines = reader.readAll();
 
-            return lines.stream()
+            List<CountryData> data = lines.stream()
                     .skip(1) // skip header
                     .map(this::parseCountryData)
                     .collect(Collectors.toList());
+            logger.info("Finished reading country data from file.");
+            return data;
         } catch (IOException | com.opencsv.exceptions.CsvException e) {
             throw new CountryDataReaderException("Error reading file: " + e.getMessage());
         }
@@ -56,9 +58,9 @@ public class CsvCountryDataReader implements CountryDataReader {
             throw new CountryDataReaderException(
                     "Invalid values in row: " + String.join(";", line) + " " + e.getMessage());
         } catch (ArrayIndexOutOfBoundsException e) {
-            
+
             throw new CountryDataReaderException(
                     "Invalid CSV row: expected at least 5 columns. Row content: " + String.join(",", line));
-        } 
+        }
     }
 }

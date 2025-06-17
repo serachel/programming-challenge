@@ -24,12 +24,12 @@ public class CsvWeatherDataReader implements WeatherDataReader {
         logger.info("Reading weather data from file: " + filePath);
         try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
             List<String[]> lines = reader.readAll();
-            return lines.stream()
+            List<WeatherData> data = lines.stream()
                     .skip(1)
-                    .map(line -> {
-                        return parseWeatherData(line);
-                    })
+                    .map(this::parseWeatherData)
                     .collect(Collectors.toList());
+            logger.info("Finished reading weather data from file.");
+            return data;
         } catch (IOException | com.opencsv.exceptions.CsvException e) {
             throw new WeatherDataReaderException("Error reading file: " + e.getMessage());
         }
