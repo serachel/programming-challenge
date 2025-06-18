@@ -42,7 +42,8 @@ public final class App {
 
             List<WeatherData> weatherData = weatherDataReader.read();
 
-            String dayWithSmallestTempSpread = weatherAnalyzer.getDayWithSmallestTempSpread(weatherData);
+            String dayWithSmallestTempSpread = String
+                    .valueOf(weatherAnalyzer.getSmallestTempSpread(weatherData).getDay());
             System.out.printf("Day with smallest temperature spread: %s%n", dayWithSmallestTempSpread);
         } catch (WeatherDataReaderException e) {
             logger.error("An error occurred while reading weather data: {}", e.getMessage());
@@ -60,7 +61,7 @@ public final class App {
             CountryDataReader countryDataReader = new CsvCountryDataReader(countryFilePath);
             CountryAnalyzer countryAnalyzer = new CountryAnalyzer();
             List<CountryData> countryData = countryDataReader.read();
-            String countryWithHighestPopulationDensity = countryAnalyzer.getMaxPopulationDensity(countryData);
+            String countryWithHighestPopulationDensity = countryAnalyzer.getMaxPopulationDensity(countryData).getName();
             System.out.printf("Country with highest population density: %s%n", countryWithHighestPopulationDensity);
         } catch (CountryDataReaderException e) {
             logger.error("An error occurred while reading country data: {}", e.getMessage());
