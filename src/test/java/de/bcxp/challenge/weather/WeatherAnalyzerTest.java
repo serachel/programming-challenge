@@ -18,8 +18,8 @@ public class WeatherAnalyzerTest {
                 new WeatherData(3, 25.0, 20.0) // spread = 5
         );
         WeatherAnalyzer analyzer = new WeatherAnalyzer();
-        String result = analyzer.getDayWithSmallestTempSpread(weatherDataList);
-        assertEquals("2", result);
+        int result = analyzer.getSmallestTempSpread(weatherDataList).getDay();
+        assertEquals(2, result);
     }
 
     @Test
@@ -27,7 +27,7 @@ public class WeatherAnalyzerTest {
         List<WeatherData> weatherDataList = List.of(); // Empty list
         WeatherAnalyzer analyzer = new WeatherAnalyzer();
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            analyzer.getDayWithSmallestTempSpread(weatherDataList);
+            analyzer.getSmallestTempSpread(weatherDataList);
         });
         assertTrue(exception.getMessage().contains("No valid weather data found"));
 

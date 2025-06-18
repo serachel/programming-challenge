@@ -18,8 +18,8 @@ public class CountryAnalyzerTest {
                 new CountryData("Belgium", 11566041, 30528) // spread = 5
         );
         CountryAnalyzer analyzer = new CountryAnalyzer();
-        String result = analyzer.getMaxPopulationDensity(countryDataList);
-        assertEquals("Malta", result);
+        CountryData result = analyzer.getMaxPopulationDensity(countryDataList);
+        assertEquals("Malta", result.getName());
     }
 
     @Test
