@@ -22,6 +22,8 @@ public class CsvWeatherDataReader implements WeatherDataReader {
     @Override
     public List<WeatherData> read() throws WeatherDataReaderException {
         logger.info("Reading weather data from file: " + filePath);
+        // OpenCSV simplifies CSV parsing and supports multiple delimiters and complex
+        // field formats.
         try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
             List<String[]> lines = reader.readAll();
             List<WeatherData> data = lines.stream()
